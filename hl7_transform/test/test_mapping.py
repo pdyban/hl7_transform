@@ -14,7 +14,7 @@ class TestHL7Mapping(unittest.TestCase):
 
     def test_initialization(self):
         self.assertEqual(len(self.mapping), 1)
-        pass
+        print(self.mapping)
 
 
 if __name__ == '__main__':
