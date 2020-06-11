@@ -1,3 +1,8 @@
-{
-  "MSH.5": "MSH.4"
-}
+[
+  {"target_field": "MSH.9.1", "operation": "copy_value",          "source_field": "MSH.9.1"                                     },
+  {"target_field": "MSH.9.3", "operation": "set_value",                                                       "args": "SIU_S12" },
+  {"target_field": "TQ1.7",   "operation": "copy_value",          "source_field": "SCH.11.4"                                    },
+  {"target_field": "TQ1.8",   "operation": "add_values",          "source_fields": ["SCH.11.4", "SCH.11.3"],  "args": "int"     },
+  {"target_field": "TQ1.9",   "operation": "concatenate_values",  "source_fields": ["SCH.11.4", "SCH.11.3"],  "args": " + "     },
+  {"target_field": "MSH.5",   "operation": "set_value",                                                       "args": ""        }
+]
