@@ -34,10 +34,6 @@ class TestHL7Transform(unittest.TestCase):
         self.assertEqual(message_transformed[HL7Field('TQ1.8')], '202005201635')
         self.assertEqual(message_transformed[HL7Field('TQ1.9')], '202005201615 + 20')
 
-    def test_message_to_string(self):
-        # TODO: move to test_message.py
-        self.assertIn('\n', self.message.to_string())
-
 
 if __name__ == '__main__':
     unittest.main()

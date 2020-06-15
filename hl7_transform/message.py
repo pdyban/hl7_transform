@@ -52,6 +52,7 @@ class HL7Message:
                                 component_name = field.name + '_' + comp_name_parts[1]
                                 if component_name == index.component_name:
                                     return component.value
+                            raise KeyError('Component {} does not exist'.format(index.component_name))
                         return field.value
         raise KeyError('Could not retrieve {}'.format(index))
 
