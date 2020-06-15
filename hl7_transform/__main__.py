@@ -6,23 +6,22 @@ This package allows transformation of HL7 messages using field mapping.
 """
 
 import argparse
+from .cli import main_cli
+
 
 def main():
     parser = argparse.ArgumentParser(
-            description="""Transform HL7 messages.""")
-    parser.add_argument('infile',
+            description="""Transform HL7 messages using a mapping scheme.""")
+    parser.add_argument('message',
             help="path to the HL7 message file, e.g. siu_s12_in.hl7")
+    parser.add_argument('mappingfile',
+            help='JSON file containing field mapping, e.g. mapping.json',
+            type=str)
     parser.add_argument('outfile',
             help="path to the output HL7 message file, e.g. siu_s12_out.hl7")
-    parser.add_argument('mappingfile',
-            help='JSON file containing field mapping',
-            type=str)
-    parser.add_argument('--encoding',
-            help='encoding of the log file, e.g. latin1',
-            type=str,
-            default='utf-8')
 
     args = parser.parse_args()
+    main_cli(args)
 
 
 if __name__ == '__main__':
