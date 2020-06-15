@@ -42,7 +42,7 @@ setup(
   test_suite="hl7_transform.test",
   entry_points={
         "console_scripts": [
-            "hl7_transform = hl7_transform:main_cli",
+            "hl7_transform = hl7_transform.__main__:main",
             ]
         },
 )
