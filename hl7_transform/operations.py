@@ -43,9 +43,9 @@ class AddValuesOperation(HL7Operation):
             int, float, str (default).
         """
         self.source_fields = [HL7Field(field) for field in source_fields]
-        if args == 'int':
+        if args['type'] == 'int':
             self.convert_to_type = int
-        elif args == 'float':
+        elif args['type'] == 'float':
             self.convert_to_type = float
         else:
             self.convert_to_type = str
@@ -66,7 +66,7 @@ class CopyValueOperation(HL7Operation):
 
 class SetValueOperation(HL7Operation):
     def __init__(self, source_fields, args):
-        self.value = args
+        self.value = args['value']
 
     def execute(self, message):
         return self.value
@@ -75,7 +75,7 @@ class SetValueOperation(HL7Operation):
 class ConcatenateOperation(HL7Operation):
     def __init__(self, source_fields, args):
         self.fields = [HL7Field(field) for field in source_fields]
-        self.separator = args
+        self.separator = args['separator']
 
     def execute(self, message):
         return self.separator.join(message[field] for field in self.fields)
