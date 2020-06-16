@@ -52,10 +52,10 @@ API Documentation
 .. toctree::
    :maxdepth: 2
 
-   docs/mapping
-   docs/message
-   docs/operations
-   docs/transform
+   mapping
+   message
+   operations
+   transform
 
 License
 -------

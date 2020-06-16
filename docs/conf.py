@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 # Configuration file for the Sphinx documentation builder.
 #
 # This file only contains a selection of the most common options. For a full
@@ -20,6 +22,8 @@ sys.path.insert(0, os.path.abspath('.'))
 project = 'hl7_transform'
 copyright = '2020, Pavlo Dyban (Doctolib GmbH)'
 author = 'Pavlo Dyban (Doctolib GmbH)'
+version = '0.1'
+release = '0.1'
 
 
 # -- General configuration ---------------------------------------------------
