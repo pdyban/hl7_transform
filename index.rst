@@ -34,9 +34,12 @@ Features
 Contribute
 ----------
 
-- Issue Tracker: `github.com/pdyban/hl7_transform/issues`_
+This project strives from contribution, you are very welcome to
+extend functionality and make pull request. The easiest ways to contribute are:
 
-- Source Code: `github.com/pdyban/hl7_transform`_
+- extend list of operations (see hl7_transform.operations module)
+- check issue tracker: `github.com/pdyban/hl7_transform/issues`_
+- improve source code: `github.com/pdyban/hl7_transform`_
 
 .. _`github.com/pdyban/hl7_transform/issues`: https://github.com/pdyban/hl7_transform/issues
 .. _`github.com/pdyban/hl7_transform`: https://github.com/pdyban/hl7_transform
