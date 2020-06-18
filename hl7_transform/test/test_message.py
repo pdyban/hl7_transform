@@ -5,7 +5,7 @@ import unittest
 
 class TestHL7Transform(unittest.TestCase):
     def setUp(self):
-        self.message = HL7Message.from_file('hl7_transform/test/msg2.hl7')
+        self.message = HL7Message.from_file('hl7_transform/test/test_msg.hl7')
 
     def test_message_accessor(self):
         self.assertEqual(self.message[HL7Field('MSH.9')], 'SIU^S12')

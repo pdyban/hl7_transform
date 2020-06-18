@@ -16,7 +16,7 @@ class TestCLI(unittest.TestCase):
 
         self.args = Args()
         self.args.mappingfile = 'hl7_transform/test/test_transform.json'
-        self.args.message = 'hl7_transform/test/msg2.hl7'
+        self.args.message = 'hl7_transform/test/test_msg.hl7'
         self.args.outfile = 'test.hl7'
         self.args.type = 'json'
 

@@ -12,7 +12,7 @@ class TestHL7Transform(unittest.TestCase):
     def setUp(self):
         mapping = HL7Mapping.from_json('hl7_transform/test/test_transform.json')
         # using example message from hl7 library (readthedocs)
-        self.message = HL7Message.from_file('hl7_transform/test/msg2.hl7')
+        self.message = HL7Message.from_file('hl7_transform/test/test_msg.hl7')
         self.transform = HL7Transform(mapping)
 
     def tearDown(self):
