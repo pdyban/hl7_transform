@@ -1,7 +1,7 @@
 """
 This file contains functions to create and persist HL7 field mappings.
 """
-import json
+import json, csv
 from hl7_transform.field import HL7Field
 from hl7_transform.operations import HL7Operation
 
@@ -42,6 +42,35 @@ class HL7Mapping(list):
         """
         with open(path) as f:
             js = json.load(f, object_hook=my_hook)
+        return HL7Mapping(js)
+
+    @staticmethod
+    def from_csv(path):
+        """
+        Initialize mapping from a CSV file.
+        @param path Path to CSV file.
+
+        The header line of the CSV file should contain the field names, e.g.:
+        target_field;operation;args.value
+        PID.3;set_value;123^^^DOCTOLIB^PI
+        """
+        js = []
+        with open(path) as csv_file:
+            reader = csv.DictReader(csv_file)
+            for line in reader:
+                l = {}
+                for key, value in line.items():
+                    if '.' in key:
+                        key, subkey = key.split('.', 2)
+                        # print(key, subkey)
+                        sub = {}
+                        sub[subkey] = value
+                        l[key] = sub
+                    else:
+                        l[key] = value
+                js.append(l)
+        js = json.loads(json.dumps(js), object_hook=my_hook)
+
         return HL7Mapping(js)
 
     def __repr__(self):
