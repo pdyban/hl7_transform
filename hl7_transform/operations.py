@@ -23,6 +23,7 @@ class HL7Operation:
 
     @staticmethod
     def from_name(name, *args):
+        """Creates the proper operation class instance by name"""
         operations = {
             'copy_value':           CopyValueOperation,
             'add_values':           AddValuesOperation,
@@ -34,7 +35,8 @@ class HL7Operation:
 
 class AddValuesOperation(HL7Operation):
     """
-    Sums up a list of field values to one value.
+    Sums up a list of field values to one value
+    using type conversion as given by `args.type`.
     """
     def __init__(self, source_fields, args):
         """

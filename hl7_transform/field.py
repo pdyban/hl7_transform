@@ -1,5 +1,5 @@
 """
-This field contains definition of an HL7 field.
+This file contains definition of an HL7 field.
 """
 
 class HL7Field:
