@@ -14,7 +14,7 @@ class TestHL7Mapping(unittest.TestCase):
 
     def test_from_json(self):
         mapping = HL7Mapping.from_json('hl7_transform/test/test_transform.json')
-        self.assertEqual(len(mapping), 6)
+        self.assertEqual(len(mapping), 9)
 
     def test_from_csv(self):
         mapping = HL7Mapping.from_csv('hl7_transform/test/test_transform.csv')

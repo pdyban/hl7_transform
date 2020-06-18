@@ -25,5 +25,6 @@ class HL7Transform:
                 try:
                     message[target_field] = operation.execute(message)
                 except (IndexError, KeyError) as e:
+                    print(message.to_string())
                     raise RuntimeError("Error occurred during processing of {}. Reason: {}".format(target_field, str(e)))
         return message

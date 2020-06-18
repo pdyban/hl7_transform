@@ -1,8 +1,11 @@
 [
   {"target_field": "MSH.9.1", "operation": "copy_value",          "source_field": "MSH.9.1"                                     },
   {"target_field": "MSH.9.3", "operation": "set_value",                                                       "args":{"value": "SIU_S12"} },
-  {"target_field": "TQ1.7",   "operation": "copy_value",          "source_field": "SCH.11.4"                                    },
-  {"target_field": "TQ1.8",   "operation": "add_values",          "source_fields": ["SCH.11.4", "SCH.11.3"],  "args":{"type": "int"}     },
-  {"target_field": "TQ1.9",   "operation": "concatenate_values",  "source_fields": ["SCH.11.4", "SCH.11.3"],  "args":{"separator": " + "}     },
-  {"target_field": "MSH.5",   "operation": "set_value",                                                       "args":{"value": ""}        }
+  {"target_field": "TQ1.7",   "operation": "copy_value",          "source_field": "SCH.11.4"                                              },
+  {"target_field": "TQ1.8",   "operation": "add_values",          "source_fields": ["SCH.11.4", "SCH.11.3"],  "args":{"type": "int"}      },
+  {"target_field": "TQ1.9",   "operation": "concatenate_values",  "source_fields": ["SCH.11.4", "SCH.11.3"],  "args":{"separator": " + "} },
+  {"target_field": "MSH.5",   "operation": "set_value",                                                       "args":{"value": ""}        },
+  {"target_field": "ORC.7.4", "operation": "set_value",                                                       "args":{"value": "4"}       },
+  {"target_field": "ORC.7.5", "operation": "set_value",                                                       "args":{"value": "5"}       },
+  {"target_field": "ORC.7.6", "operation": "set_value",                                                       "args":{"value": "6"}       }
 ]

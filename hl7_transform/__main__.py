@@ -20,7 +20,7 @@ def main():
     parser.add_argument('outfile',
             help="path to the output HL7 message file, e.g. siu_s12_out.hl7")
     parser.add_argument('--type',
-            help='mapping file type, can be json or csv',
+            help='mapping file type, can be json (default) or csv',
             default='json',
             type=str)
 

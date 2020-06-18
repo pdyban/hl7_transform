@@ -66,14 +66,23 @@ class HL7Message:
                         component = value
                         return True
 
-            # insert component value in the right position
-            component_separator = self.hl7_message.encoding_chars['COMPONENT']
-            comp_values = [c.value for c in field.children]
             if index.component == 0:
                 str_value = value
             else:
-                pre = comp_values + ['']*(index.component - len(comp_values)+1)
-                str_value = component_separator.join(pre[:index.component-1] + [value] + comp_values[index.component-1:])
+                # insert component value in the right position
+                component_separator = self.hl7_message.encoding_chars['COMPONENT']
+                component_dict = {}
+                for component in field.children:
+                    comp_name_parts = component.name.split('_')
+                    component_name = field.name + '_' + comp_name_parts[1]
+                    component_index = int(comp_name_parts[1])
+                    component_dict[component_index] = component.value
+                component_dict[index.component] = value
+
+                comp_value_list = ['']*max(len(component_dict), index.component)
+                for comp_index, comp_value in component_dict.items():
+                    comp_value_list.insert(comp_index-1, comp_value)
+                str_value = component_separator.join(comp_value_list)
             field.value = str_value
             return True
 
