@@ -15,10 +15,14 @@ def main():
     parser.add_argument('message',
             help="path to the HL7 message file, e.g. siu_s12_in.hl7")
     parser.add_argument('mappingfile',
-            help='JSON file containing field mapping, e.g. mapping.json',
+            help='path to file containing field mapping, e.g. mapping.json',
             type=str)
     parser.add_argument('outfile',
             help="path to the output HL7 message file, e.g. siu_s12_out.hl7")
+    parser.add_argument('--type',
+            help='mapping file type, can be json or csv',
+            default='json',
+            type=str)
 
     args = parser.parse_args()
     main_cli(args)

@@ -18,6 +18,7 @@ class TestCLI(unittest.TestCase):
         self.args.mappingfile = 'hl7_transform/test/test_transform.json'
         self.args.message = 'hl7_transform/test/msg2.hl7'
         self.args.outfile = 'test.hl7'
+        self.args.type = 'json'
 
     def tearDown(self):
         if os.path.exists(self.args.outfile):
@@ -41,5 +42,11 @@ class TestCLI(unittest.TestCase):
     #         self.assertEqual(result_file, expected_result_message.to_string())
 
     def test_main_cli(self):
+        res = main_cli(self.args)
+        self.assertIsNone(res, msg='CLI failed')
+
+    def test_main_cli_csv_mapping(self):
+        self.args.mappingfile = 'hl7_transform/test/test_transform.csv'
+        self.args.type = 'csv'
         res = main_cli(self.args)
         self.assertIsNone(res, msg='CLI failed')
