@@ -1,0 +1,7 @@
+[
+  {"target_field": "PID.3.1", "operation": "generate_numeric_id"},
+  {"target_field": "PID.3.4", "operation": "set_value", "args":{"value": "Doctolib"} },
+  {"target_field": "PID.3.5", "operation": "set_value", "args":{"value": "PI"} },
+  {"target_field": "MSH.10",  "operation": "generate_alphanumeric_id"},
+  {"target_field": "MSH.7",   "operation": "generate_current_datetime"}
+]

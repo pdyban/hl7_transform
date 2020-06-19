@@ -11,7 +11,13 @@ def main_cli(args):
     else:
         raise ArgumentError('Unsupported mapping file type. Currently supported are: json, csv.')
     transform = HL7Transform(mapping)
-    message = HL7Message.from_file(args.message)
+    if args.message:
+        message = HL7Message.from_file(args.message)
+    else:
+        message = HL7Message.new()
     message_transformed = transform.execute(message)
-    with open(args.outfile, 'w') as f_out:
-        f_out.write(message_transformed.to_string())
+    if args.out is not None:
+        with open(args.out, 'w') as f_out:
+            f_out.write(message_transformed.to_string())
+    else:
+        print(message_transformed.to_string())

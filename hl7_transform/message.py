@@ -2,6 +2,7 @@
 This file contains a wrapper for an HL7 message with convenience functions.
 """
 from hl7apy.parser import parse_message
+from hl7apy.core import Message as hl7apy_message
 
 
 class HL7Message:
@@ -30,6 +31,11 @@ class HL7Message:
         with open(path) as f:
             txt = f.read().strip()
         return HL7Message.from_string(txt)
+
+    @staticmethod
+    def new():
+        hl7_message = hl7apy_message()
+        return HL7Message(hl7_message)
 
     def to_string(self):
         """

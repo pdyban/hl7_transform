@@ -12,7 +12,7 @@ def my_hook(dct):
     """
     ret = {}
     if 'operation' in dct and 'target_field' in dct:
-        operation_name, source_fields, args = dct['operation'], dct.get('source_fields', [dct.get('source_field', None)]), dct.get('args', [])
+        operation_name, source_fields, args = dct['operation'], dct.get('source_fields', [dct.get('source_field', None)]), dct.get('args', {})
         if len(source_fields) == 1 and source_fields[0] is None:
             source_fields = []
         ret[HL7Field(dct['target_field'])] = HL7Operation.from_name(operation_name, source_fields, args)
