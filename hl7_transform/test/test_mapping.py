@@ -18,7 +18,7 @@ class TestHL7Mapping(unittest.TestCase):
 
     def test_from_csv(self):
         mapping = HL7Mapping.from_csv('hl7_transform/test/test_transform.csv')
-        self.assertEqual(len(mapping), 38)
+        self.assertEqual(len(mapping), 42)
 
         expected_result = [
             {'target_field_name': 'PID.3', 'operation_name': 'SetValueOperation'},

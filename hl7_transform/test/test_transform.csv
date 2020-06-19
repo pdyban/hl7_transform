@@ -2,6 +2,10 @@ target_field,operation,args.value,source_field
 PID.3,set_value,027975941^^^CLINICOM^PI
 PID.18,set_value,196000037
 PV1.2,copy_value,,PID.18
+MSH.10,generate_alphanumeric_id
+PID.3.1,generate_numeric_id
+PID.3.4,set_value,Doctolib
+PID.3.5,set_value,PI
 PV1.10,set_value,1922
 PV1.19,set_value,
 ORC.1,set_value,NW
@@ -12,7 +16,7 @@ ORC.5,set_value,HD (Order is on hold)
 ORC.7.4,set_value,20200507172300
 ORC.7.5,set_value,20200507172330
 ORC.7.6,set_value,Low
-ORC.9,set_value,20200125112330
+ORC.9,generate_current_datetime
 ORC.12.2,set_value,Leblanc
 ORC.12.3,set_value,Dr. Jack
 ORC.13,set_value,1222

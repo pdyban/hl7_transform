@@ -1,13 +1,16 @@
 """
-This file contains field operations.
+Operations on HL7 fields.
 """
 
 from hl7_transform.field import HL7Field
+import hashlib
+import random
+from datetime import datetime
 
 
 class HL7Operation:
     """
-    Field operation interface, must be implemented in a child class.
+    An Operation interface, all operations must derive from this class.
     """
     def __init__(self, source_fields, args):
         raise NotImplementedError()
@@ -23,14 +26,32 @@ class HL7Operation:
 
     @staticmethod
     def from_name(name, *args):
-        """Creates the proper operation class instance by name"""
+        """
+        Creates the proper operation class instance by name.
+
+        :param name: The name of the operation. Currently available operations are:
+            - copy_value:                   :class:`CopyValueOperation`,
+            - add_values:                   AddValuesOperation,
+            - set_value:                    SetValueOperation,
+            - concatenate_values:           ConcatenateOperation,
+            - generate_alphanumeric_id:     GenerateAplhanumericID,
+            - generate_numeric_id:          GenerateNumericID,
+            - generate_current_datetime:    GenerateCurrentDatetime
+
+        """
         operations = {
-            'copy_value':           CopyValueOperation,
-            'add_values':           AddValuesOperation,
-            'set_value':            SetValueOperation,
-            'concatenate_values':   ConcatenateOperation,
+            'copy_value':                   CopyValueOperation,
+            'add_values':                   AddValuesOperation,
+            'set_value':                    SetValueOperation,
+            'concatenate_values':           ConcatenateOperation,
+            'generate_alphanumeric_id':     GenerateAplhanumericID,
+            'generate_numeric_id':          GenerateNumericID,
+            'generate_current_datetime':    GenerateCurrentDatetime,
             }
-        return operations[name](*args)
+        try:
+            return operations[name](*args)
+        except KeyError as e:
+            raise KeyError("{} is not a valid operation name. Available operations are: {}".format(name, ', '.join(operations.keys())))
 
 
 class AddValuesOperation(HL7Operation):
@@ -72,6 +93,38 @@ class SetValueOperation(HL7Operation):
 
     def execute(self, message):
         return self.value
+
+
+class GenerateAplhanumericID(SetValueOperation):
+    """
+    Generates an alphanumeric ID, producing a random string encoded in the
+    hexadecimal system of length 32 bytes.
+    This is useful for creating random message identifiers.
+    """
+    def __init__(self, source_fields, args):
+        args['value'] = hashlib.md5(str(random.random()).encode()).hexdigest()
+        SetValueOperation.__init__(self, source_fields, args)
+
+
+class GenerateNumericID(SetValueOperation):
+    """
+    Generates an numeric ID, producing a random string encoded with digits
+    in decimal system of length 9 digits.
+    This is useful for creating random patient or event identifiers.
+    """
+    def __init__(self, source_fields, args):
+        args['value'] = '{:09}'.format(random.randint(0,1e9))
+        SetValueOperation.__init__(self, source_fields, args)
+
+
+class GenerateCurrentDatetime(SetValueOperation):
+    """
+    Generates current datetime as a string in HL7 format.
+    This is useful for creating event timestamps.
+    """
+    def __init__(self, source_fields, args):
+        args['value'] = datetime.now().strftime('%Y%m%d%H%M%S')
+        SetValueOperation.__init__(self, source_fields, args)
 
 
 class ConcatenateOperation(HL7Operation):
