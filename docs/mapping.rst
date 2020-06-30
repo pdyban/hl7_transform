@@ -43,8 +43,21 @@ PV1.2         copy_value  PID.18
 PV1.10        set_value   1922
 ============  ==========  ============  ==========
 
+Operations
+----------
+A mapping scheme consists of a list of operations.
+Each operation consists of the operation type, a list of source fields,
+whose values are used in the computation, and a list of optional arguments.
+
 API documentation
 -----------------
 
   .. automodule:: hl7_transform.mapping
+    :members:
+
+Operations are created by name in the following factory function:
+
+  .. autofunction:: hl7_transform.operations.HL7Operation.from_name
+
+  .. automodule:: hl7_transform.operations
     :members:

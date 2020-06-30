@@ -54,7 +54,6 @@ API Documentation
 
    mapping
    message
-   operations
    transform
 
 License
