@@ -19,7 +19,7 @@ class TestHL7Transform(unittest.TestCase):
         pass
 
     def test_initialization(self):
-        self.assertEqual(len(self.transform.mapping), 9)
+        self.assertEqual(len(self.transform.mapping), 10)
 
     def test_execution(self):
         message_transformed = self.transform.execute(self.message)
@@ -36,6 +36,7 @@ class TestHL7Transform(unittest.TestCase):
         self.assertEqual(message_transformed[HL7Field('ORC.7.4')], '4')
         self.assertEqual(message_transformed[HL7Field('ORC.7.5')], '5')
         self.assertEqual(message_transformed[HL7Field('ORC.7.6')], '6')
+        self.assertEqual(message_transformed[HL7Field('SCH.9')], '202005201635')
 
 
 if __name__ == '__main__':

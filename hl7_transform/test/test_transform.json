@@ -7,5 +7,6 @@
   {"target_field": "MSH.5",   "operation": "set_value",                                                       "args":{"value": ""}        },
   {"target_field": "ORC.7.4", "operation": "set_value",                                                       "args":{"value": "4"}       },
   {"target_field": "ORC.7.5", "operation": "set_value",                                                       "args":{"value": "5"}       },
-  {"target_field": "ORC.7.6", "operation": "set_value",                                                       "args":{"value": "6"}       }
+  {"target_field": "ORC.7.6", "operation": "set_value",                                                       "args":{"value": "6"}       },
+  {"target_field": "SCH.9",   "operation": "set_end_time",        "source_fields": ["SCH.11.4", "SCH.11.3"]                                }
 ]

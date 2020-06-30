@@ -36,7 +36,8 @@ class HL7Operation:
             - concatenate_values:           ConcatenateOperation,
             - generate_alphanumeric_id:     GenerateAplhanumericID,
             - generate_numeric_id:          GenerateNumericID,
-            - generate_current_datetime:    GenerateCurrentDatetime
+            - generate_current_datetime:    GenerateCurrentDatetime,
+            - set_end_time:                 SetEndTime
 
         """
         operations = {
@@ -47,6 +48,7 @@ class HL7Operation:
             'generate_alphanumeric_id':     GenerateAplhanumericID,
             'generate_numeric_id':          GenerateNumericID,
             'generate_current_datetime':    GenerateCurrentDatetime,
+            'set_end_time':                 SetEndTime,
             }
         try:
             return operations[name](*args)
@@ -134,3 +136,15 @@ class ConcatenateOperation(HL7Operation):
 
     def execute(self, message):
         return self.separator.join(message[field] for field in self.fields)
+
+
+class SetEndTime(HL7Operation):
+    """Computes end time based on start time and duration."""
+    def __init__(self, source_fields, args):
+        self.dt = HL7Field(source_fields[0])
+        self.duration = HL7Field(source_fields[1])
+
+    def execute(self, message):
+        dt = message[self.dt]
+        duration = message[self.duration]
+        return str(int(dt) + int(duration)*(10**(len(dt) - 12)))
