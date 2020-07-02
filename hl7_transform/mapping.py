@@ -22,14 +22,6 @@ def my_hook(dct):
     return ret
 
 
-# class HL7JsonDecoder(json.JSONDecoder):
-#     """
-#     Custom JSON decoder that parses all fields to HL7Field objects.
-#     """
-#     def __init__(self):
-#         json.JSONDecoder.__init__(self, object_hook=my_hook)
-
-
 class HL7Mapping(list):
     """
     Contains field mappings and rules how to map fields.
@@ -71,6 +63,11 @@ class HL7Mapping(list):
                 js.append(l)
         js = json.loads(json.dumps(js), object_hook=my_hook)
 
+        return HL7Mapping(js)
+
+    @staticmethod
+    def from_string(s):
+        js = json.loads(s, object_hook=my_hook)
         return HL7Mapping(js)
 
     def __repr__(self):
