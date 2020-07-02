@@ -6,7 +6,7 @@ this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-version = '0.1'
+version = '0.1.1'
 account_name = 'pdyban'
 setup(
   name = 'hl7_transform',
@@ -22,7 +22,7 @@ setup(
   download_url = f'https://github.com/{account_name}/hl7_transform/archive/v.{version}.tar.gz',
   keywords = ['HL7', 'hospital IT', 'infrastructure', 'message', 'transform'],
   python_requires='>=3',
-  install_requires=[],
+  install_requires=['hl7apy',],
   classifiers=[
     'Development Status :: 4 - Beta',
     'Intended Audience :: System Administrators',
