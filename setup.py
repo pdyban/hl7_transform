@@ -7,6 +7,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 version = '0.1'
+account_name = 'pdyban'
 setup(
   name = 'hl7_transform',
   packages = find_packages(),
@@ -17,8 +18,8 @@ setup(
   long_description_content_type='text/markdown',
   author = 'Pavlo Dyban (Doctolib GmbH)',
   author_email = 'pavlo.dyban@doctolib.com',
-  url = 'https://github.com/doctolib/hl7_transform',
-  download_url = 'https://github.com/doctolib/hl7_transform/archive/v.{}.tar.gz'.format(version),
+  url = f'https://github.com/{account_name}/hl7_transform',
+  download_url = f'https://github.com/{account_name}/hl7_transform/archive/v.{version}.tar.gz',
   keywords = ['HL7', 'hospital IT', 'infrastructure', 'message', 'transform'],
   python_requires='>=3',
   install_requires=[],
