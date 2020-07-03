@@ -30,7 +30,7 @@ class HL7Mapping(list):
     def from_json(path):
         """
         Initialize mapping from a JSON file.
-        \param path Path to JSON file.
+        :param path: Path to JSON file.
         """
         with open(path) as f:
             js = json.load(f, object_hook=my_hook)
@@ -40,11 +40,12 @@ class HL7Mapping(list):
     def from_csv(path):
         """
         Initialize mapping from a CSV file.
-        @param path Path to CSV file.
+        :param path: Path to CSV file.
 
-        The header line of the CSV file should contain the field names, e.g.:
-        target_field;operation;args.value
-        PID.3;set_value;123^^^DOCTOLIB^PI
+        The header line of the CSV file should contain the field names, e.g.::
+
+            target_field;operation;args.value
+            PID.3;set_value;123^^^DOCTOLIB^PI
         """
         js = []
         with open(path) as csv_file:
@@ -67,6 +68,7 @@ class HL7Mapping(list):
 
     @staticmethod
     def from_string(s):
+        """Read mapping scheme from a JSON-formatted string"""
         js = json.loads(s, object_hook=my_hook)
         return HL7Mapping(js)
 

@@ -5,19 +5,24 @@ This file contains the transformation class.
 
 
 class HL7Transform:
+    """
+    The transformation class that applies an :class:`HL7Mapping` to
+    an :class:`HL7Message`.
+    """
     def __init__(self, mapping):
         """
-        \param mapping A dictionary that contains field mappings.
+        :param mapping: A dictionary that contains field mappings.
         """
         self.mapping = mapping
 
     def execute(self, message):
         """
         Applies the transformation to an HL7 message and outputs the
-        transformed message. The original message is not modified.
+        transformed message both as the return value and
+        by modifying the input message.
 
-        \param message Applies the transformation to this message.
-        \return The transformed copy of the input message.
+        :param message: Applies the transformation to this message.
+        :return: The transformed copy of the input message.
         """
         # message_transformed = deepcopy(message)
         for mapping in self.mapping:

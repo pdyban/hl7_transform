@@ -1,5 +1,5 @@
 """
-Operations on HL7 fields.
+A list of operations.
 """
 
 from hl7_transform.field import HL7Field
@@ -27,14 +27,15 @@ class HL7Operation:
         Creates the proper operation class instance by name.
 
         :param name: The name of the operation. Currently available operations are:
+
             - copy_value:                   :class:`CopyValueOperation`,
-            - add_values:                   AddValuesOperation,
-            - set_value:                    SetValueOperation,
-            - concatenate_values:           ConcatenateOperation,
-            - generate_alphanumeric_id:     GenerateAplhanumericID,
-            - generate_numeric_id:          GenerateNumericID,
-            - generate_current_datetime:    GenerateCurrentDatetime,
-            - set_end_time:                 SetEndTime
+            - add_values:                   :class:`AddValuesOperation`,
+            - set_value:                    :class:`SetValueOperation`,
+            - concatenate_values:           :class:`ConcatenateOperation`,
+            - generate_alphanumeric_id:     :class:`GenerateAplhanumericID`,
+            - generate_numeric_id:          :class:`GenerateNumericID`,
+            - generate_current_datetime:    :class:`GenerateCurrentDatetime`,
+            - set_end_time:                 :class:`SetEndTime`
 
         """
         operations = {
