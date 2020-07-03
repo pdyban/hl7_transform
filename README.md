@@ -3,6 +3,8 @@
 ``hl7_transform`` is a Python package that allows for transformation of HL7 messages
 using a field mapping dictionary.
 
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) ![Docs build status](https://readthedocs.org/projects/hl7-transform/badge/?version=latest) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/pdyban/hl7_transform/CI) [![PyPI license](https://img.shields.io/pypi/l/hl7-transform.svg)](https://pypi.python.org/pypi/hl7-transform/) [![PyPI pyversions](https://img.shields.io/pypi/pyversions/hl7-transform.svg)](https://pypi.python.org/pypi/hl7-transform/)
+
 As a standard, HL7 permits different ways of implementing message interfaces
 between systems. For example two systems that exchange ADT or SIU messages often
 pass the same information in different fields.
