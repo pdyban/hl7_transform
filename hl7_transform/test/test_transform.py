@@ -31,12 +31,12 @@ class TestHL7Transform(unittest.TestCase):
             message_transformed[HL7Field('NTE.4')]
         self.assertEqual(len(message_transformed[HL7Field('MSH.5')]), 0)
         self.assertEqual(message_transformed[HL7Field('TQ1.7')], '202005201615')
-        self.assertEqual(message_transformed[HL7Field('TQ1.8')], '202005201635')
-        self.assertEqual(message_transformed[HL7Field('TQ1.9')], '202005201615 + 20')
+        self.assertEqual(message_transformed[HL7Field('TQ1.8')], '202005201665')
+        self.assertEqual(message_transformed[HL7Field('TQ1.9')], '202005201615 + 50')
         self.assertEqual(message_transformed[HL7Field('ORC.7.4')], '4')
         self.assertEqual(message_transformed[HL7Field('ORC.7.5')], '5')
         self.assertEqual(message_transformed[HL7Field('ORC.7.6')], '6')
-        self.assertEqual(message_transformed[HL7Field('SCH.9')], '202005201635')
+        self.assertEqual(message_transformed[HL7Field('SCH.9')], '202005201705')
 
 
 if __name__ == '__main__':
