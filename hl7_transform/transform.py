@@ -1,7 +1,7 @@
 """
 This file contains the transformation class.
 """
-from copy import deepcopy
+# from copy import deepcopy
 
 
 class HL7Transform:

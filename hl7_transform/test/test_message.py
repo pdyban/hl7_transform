@@ -1,5 +1,6 @@
 from hl7_transform.message import HL7Message
 from hl7_transform.field import HL7Field
+from hl7_transform.core import APIError
 import unittest
 
 
@@ -16,6 +17,10 @@ class TestHL7Transform(unittest.TestCase):
 
     def test_message_to_string(self):
         self.assertIn('\n', self.message.to_string())
+
+    def test_raises(self):
+        with self.assertRaises(APIError):
+            HL7Message.from_string('MSH|')
 
 
 if __name__ == '__main__':
