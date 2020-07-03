@@ -16,7 +16,6 @@ class HL7Operation:
         raise NotImplementedError()
 
     def execute(self, message):
-        """Applies the operation to the message"""
         raise NotImplementedError()
 
     def __repr__(self):
@@ -112,6 +111,19 @@ class CopyValueOperation(HL7Operation):
 
 
 class SetValueOperation(HL7Operation):
+    """
+    Sets a field to a given value.
+
+    Example usage in a mapping scheme::
+
+        [
+            {
+                "target_field": "ORC.7.6",
+                "operation": "set_value",
+                "args": {"value": "6"}
+            }
+        ]
+    """
     def __init__(self, source_fields, args):
         self.value = args['value']
 
@@ -124,6 +136,15 @@ class GenerateAplhanumericID(SetValueOperation):
     Generates an alphanumeric ID, producing a random string encoded in the
     hexadecimal system of length 32 bytes.
     This is useful for creating random message identifiers.
+
+    Example usage in a mapping scheme::
+
+        [
+            {
+                "target_field": "MSH.10",
+                "operation": "generate_alphanumeric_id"
+            }
+        ]
     """
     def __init__(self, source_fields, args):
         args['value'] = hashlib.md5(str(random.random()).encode()).hexdigest()
@@ -135,6 +156,15 @@ class GenerateNumericID(SetValueOperation):
     Generates an numeric ID, producing a random string encoded with digits
     in decimal system of length 9 digits.
     This is useful for creating random patient or event identifiers.
+
+    Example usage in a mapping scheme::
+
+        [
+            {
+                "target_field": "PID.3.1",
+                "operation": "generate_numeric_id"
+            }
+        ]
     """
     def __init__(self, source_fields, args):
         args['value'] = '{:09}'.format(random.randint(0,1e9))
@@ -145,6 +175,15 @@ class GenerateCurrentDatetime(SetValueOperation):
     """
     Generates current datetime as a string in HL7 format.
     This is useful for creating event timestamps.
+
+    Example usage in a mapping scheme::
+
+        [
+            {
+                "target_field": "ORC.9",
+                "operation": "generate_current_datetime"
+            }
+        ]
     """
     def __init__(self, source_fields, args):
         args['value'] = datetime.now().strftime('%Y%m%d%H%M%S')
@@ -152,6 +191,20 @@ class GenerateCurrentDatetime(SetValueOperation):
 
 
 class ConcatenateOperation(HL7Operation):
+    """
+    Concatenates two field values as strings placing a separator in between.
+
+    Example usage in a mapping scheme::
+
+        [
+            {
+                "target_field": "SCH.9",
+                "operation": "concatenate_values",
+                "source_fields": ["SCH.11.4", "SCH.11.3"],
+                "args": {"separator": " + "}
+            }
+        ]
+    """
     def __init__(self, source_fields, args):
         self.fields = [HL7Field(field) for field in source_fields]
         self.separator = args['separator']
@@ -161,7 +214,18 @@ class ConcatenateOperation(HL7Operation):
 
 
 class SetEndTime(HL7Operation):
-    """Computes end time based on start time and duration."""
+    """Computes end time based on start time and duration.
+
+    Example usage in a mapping scheme::
+
+        [
+            {
+                "target_field": "SCH.9",
+                "operation": "set_end_time",
+                "source_fields": ["SCH.11.4", "SCH.11.3"]
+            }
+        ]
+    """
     def __init__(self, source_fields, args):
         self.dt = HL7Field(source_fields[0])
         self.duration = HL7Field(source_fields[1])
