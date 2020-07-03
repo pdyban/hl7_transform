@@ -2,30 +2,51 @@ Mapping rules
 =============
 
 Messages can be transformed using a mapping scheme. This page describes
-how such a mapping scheme is structured.
+how such a mapping scheme is constructed.
 
-A mapping scheme contains a list of target fields and operations, whose values are written into the target field, e.g.::
+An HL7 message consists of a list of segments, each of them in turn containing fields.
+The mapping scheme defines how fields of the given message have to be transformed.
+
+If we take an example message::
+
+    MSH|^~\&|Doctolib||Doctolib||20200522153917||SIU^S12|d051c31adcc460b5289f|P|2.5.1|||||FRA|UTF-8
+    SCH||8678012^Doctolib||||neu_pat^Neupatient|||||^^20^202005201615|||||111683^Jackson^Heights||||Doctolib|||||Booked
+    NTE|||Some notes
+    PID|||19619205^^^Doctolib^PI||Test^Otto^^^^^L||19900101|M|Geburtsname^^^^^^M||Wilhelmstrasse 118^^Berlin^^11111||+491738599814^^^jackson.heights@doctolib.com~+49301234567
+    RGS|1
+    AIG|1|||allg_chir^Allg. Chirurgie
+
+and an example mapping scheme in JSON format::
 
     [
       {
-        "target_field": "MSH.9.3",
-        "operation": "set_value",
-        "args": {"value": "SIU_S12"}
+          "target_field": "TQ1.7",
+          "operation": "copy_value",
+          "source_field": "SCH.11.4"
       }
     ]
 
-This mapping consists of one operation. It sets the value of the
-`target_field` to `value`, i.e. field MSH.9.3 is given the string value
-of "SIU_S12".
+Then the resulting message will contain all fields of the source message, plus
+a new TQ1 segment with the value from field SCH.11.4 copied into field TQ1.7::
 
-Every operation consists of a number of mandatory fields: "target_field",
-"operation" and "args". The content of the "args" dictionary depends
-on the definition of the operation and differs from one
-operation to the other. For more information, consult the documentation of the operations module.
+    MSH|^~\&|Doctolib||Doctolib||20200522153917||SIU^S12|d051c31adcc460b5289f|P|2.5.1|||||FRA|UTF-8
+    SCH||8678012^Doctolib||||neu_pat^Neupatient|||||^^20^202005201615|||||111683^Jackson^Heights||||Doctolib|||||Booked
+    NTE|||Some notes
+    PID|||19619205^^^Doctolib^PI||Test^Otto^^^^^L||19900101|M|Geburtsname^^^^^^M||Wilhelmstrasse 118^^Berlin^^11111||+491738599814^^^jackson.heights@doctolib.com~+49301234567
+    RGS|1
+    AIG|1|||allg_chir^Allg. Chirurgie
+    TQ1|||||||202005201615
 
-This library can read mapping schemes from JSON or CSV files.
+Mapping scheme file
+-------------------
 
-Example JSON mapping scheme::
+A mapping scheme can be represented either in JSON or in CSV format.
+CSV format does not support all operations.
+
+JSON-formatted mapping scheme file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+An example JSON mapping scheme::
 
     [
       {"target_field": "PID.3", "operation": "set_value", "args": {"value": "123^PatID"}},
@@ -33,7 +54,10 @@ Example JSON mapping scheme::
       {"target_field": "PV1.10", "operation": "set_value", "args": {"value": "1922"}}
     ]
 
-Example CSV mapping scheme is an equivalent to the JSON mapping scheme above:
+CSV-formatted mapping scheme file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+An example CSV mapping scheme is an equivalent to the JSON mapping scheme above:
 
 ============  ==========  ============  ==========
 target_field  operation   source_field  args.value
@@ -45,19 +69,32 @@ PV1.10        set_value   1922
 
 Operations
 ----------
-A mapping scheme consists of a list of operations.
-Each operation consists of the operation type, a list of source fields,
-whose values are used in the computation, and a list of optional arguments.
+A mapping scheme consists of a list of operations, e.g.::
 
-API documentation
------------------
+    [
+      {
+        "target_field": "MSH.9.2",
+        "operation": "set_value",
+        "args": {"value": "S12"}
+      },
+      {
+        "target_field": "MSH.9.3",
+        "operation": "set_value",
+        "args": {"value": "SIU_S12"}
+      }
+    ]
 
-  .. automodule:: hl7_transform.mapping
-    :members:
+This mapping consists of two operations, both of type "set_value". The full list of supported operations can be found in :ref:`List of supported operations`.
 
-Operations are created by name in the following factory function:
+Every operation consists of a number of mandatory fields: "target_field",
+"operation" and "args".
 
-  .. autofunction:: hl7_transform.operations.HL7Operation.from_name
+    ``target_field`` defines the field where the value shall be written into
+    ``operation`` define the operation type (e.g. copy, add etc.)
+    ``args`` is a dictionary of optional arguments that depend on the operation.
+
+List of supported operations
+----------------------------
 
   .. automodule:: hl7_transform.operations
     :members:

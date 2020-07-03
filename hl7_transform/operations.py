@@ -16,9 +16,7 @@ class HL7Operation:
         raise NotImplementedError()
 
     def execute(self, message):
-        """
-        Executes the operation.
-        """
+        """Applies the operation to the message"""
         raise NotImplementedError()
 
     def __repr__(self):
@@ -60,6 +58,17 @@ class AddValuesOperation(HL7Operation):
     """
     Sums up a list of field values to one value
     using type conversion as given by `args.type`.
+
+    Example usage in a mapping scheme::
+
+        [
+            {
+                "target_field": "TQ1.8",
+                "operation": "add_values",
+                "source_fields": ["SCH.11.4", "SCH.11.3"],
+                "args": {"type": "int"}
+            }
+        ]
     """
     def __init__(self, source_fields, args):
         """
@@ -80,6 +89,19 @@ class AddValuesOperation(HL7Operation):
 
 
 class CopyValueOperation(HL7Operation):
+    """
+    Copies a value from one field to the other.
+
+    Example usage in a mapping scheme::
+
+        [
+            {
+                "target_field": "TQ1.9",
+                "operation": "copy_value",
+                "source_field": "SCH.11.3"
+            }
+        ]
+    """
     def __init__(self, source_fields, args):
         if len(source_fields) != 1:
             raise RuntimeError("CopyValueOperation can only copy one field value.")

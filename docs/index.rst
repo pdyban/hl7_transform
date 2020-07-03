@@ -46,8 +46,8 @@ extend functionality and make pull request. The easiest ways to contribute are:
 
 If you are having issues, please let us know.
 
-API Documentation
------------------
+Documentation
+-------------
 
 .. toctree::
    :maxdepth: 2
