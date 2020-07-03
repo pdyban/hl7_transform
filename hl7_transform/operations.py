@@ -5,7 +5,7 @@ Operations on HL7 fields.
 from hl7_transform.field import HL7Field
 import hashlib
 import random
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class HL7Operation:
@@ -167,6 +167,9 @@ class SetEndTime(HL7Operation):
         self.duration = HL7Field(source_fields[1])
 
     def execute(self, message):
-        dt = message[self.dt]
-        duration = message[self.duration]
-        return str(int(dt) + int(duration)*(10**(len(dt) - 12)))
+        dt_str = message[self.dt]
+        dt_format = ('%Y%m%d%H%M', '%Y%m%d%H%M%S')[len(dt_str) > 12]
+        dt = datetime.strptime(dt_str, dt_format)
+        duration = timedelta(minutes=int(message[self.duration]))
+        end_time = dt + duration
+        return end_time.strftime(dt_format)
