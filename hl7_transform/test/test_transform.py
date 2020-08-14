@@ -38,6 +38,8 @@ class TestHL7Transform(unittest.TestCase):
         self.assertEqual(message_transformed[HL7Field('ORC.7.6')], '6')
         self.assertEqual(message_transformed[HL7Field('SCH.9')], '202005201705')
         self.assertTrue(int(message_transformed[HL7Field('ZBE.1.1')]))
+        self.assertEqual(message_transformed[HL7Field('ZBE.1.2')], 'MOVEMENT')
+        self.assertTrue(int(message_transformed[HL7Field('ZBE.2')]))
 
 
 if __name__ == '__main__':

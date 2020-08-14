@@ -69,15 +69,13 @@ class HL7Message:
         def set_component_value(field, index, value):
             if index.component > 0:
                 for component_index, component in enumerate(field.children, start=1):
-                    # print(component, component.name, component.long_name, component.is_z_element(), component.is_unknown(), component.value)
                     if component.long_name is None:
                         comp_name_parts = (None, str(component_index),)
                     else:
                         comp_name_parts = component.name.split('_')
-                    # print(comp_name_parts)
                     component_name = field.name + '_' + comp_name_parts[1]
                     if component_name == index.component_name:
-                        component = value
+                        component.value = value
                         return True
 
             if index.component == 0:
