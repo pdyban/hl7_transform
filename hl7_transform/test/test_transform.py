@@ -19,11 +19,11 @@ class TestHL7Transform(unittest.TestCase):
         pass
 
     def test_initialization(self):
-        self.assertEqual(len(self.transform.mapping), 10)
+        self.assertEqual(len(self.transform.mapping), 13)
 
     def test_execution(self):
         message_transformed = self.transform.execute(self.message)
-        self.assertEqual(len(message_transformed.hl7_message.children), 8)
+        self.assertEqual(len(message_transformed.hl7_message.children), 9)
         self.assertTrue('TQ1' in [segment.name for segment in message_transformed.hl7_message.children])
         self.assertEqual(message_transformed[HL7Field('MSH.9')], 'SIU^S12^SIU_S12')
         self.assertEqual(message_transformed[HL7Field('NTE.3')], 'Muss Ultraschall bekommen')
@@ -37,6 +37,7 @@ class TestHL7Transform(unittest.TestCase):
         self.assertEqual(message_transformed[HL7Field('ORC.7.5')], '5')
         self.assertEqual(message_transformed[HL7Field('ORC.7.6')], '6')
         self.assertEqual(message_transformed[HL7Field('SCH.9')], '202005201705')
+        self.assertTrue(int(message_transformed[HL7Field('ZBE.1.1')]))
 
 
 if __name__ == '__main__':

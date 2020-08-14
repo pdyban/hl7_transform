@@ -14,20 +14,20 @@ class TestHL7Mapping(unittest.TestCase):
 
     def test_from_json(self):
         mapping = HL7Mapping.from_json('hl7_transform/test/test_transform.json')
-        self.assertEqual(len(mapping), 10)
+        self.assertEqual(len(mapping), 13)
 
     def test_from_string_json(self):
         with open('hl7_transform/test/test_transform.json') as f:
             mapping = HL7Mapping.from_string(f.read())
-        self.assertEqual(len(mapping), 10)
+        self.assertEqual(len(mapping), 13)
 
     def test_from_csv(self):
         mapping = HL7Mapping.from_csv('hl7_transform/test/test_transform.csv')
         self.assertEqual(len(mapping), 42)
 
         expected_result = [
-            {'target_field_name': 'PID.3', 'operation_name': 'SetValueOperation'},
-            {'target_field_name': 'PID.18', 'operation_name': 'SetValueOperation'},
+            {'target_field_name': 'PID.3', 'operation_name': 'SetValue'},
+            {'target_field_name': 'PID.18', 'operation_name': 'SetValue'},
             ]
         for index, exp_res in enumerate(expected_result):
             target_field = list(mapping[index].keys())[0]
@@ -37,7 +37,7 @@ class TestHL7Mapping(unittest.TestCase):
 
 
         expected_result = [
-            {'target_field_name': 'PV1.2', 'operation_name': 'CopyValueOperation', 'source_field': 'PID.18'},
+            {'target_field_name': 'PV1.2', 'operation_name': 'CopyValue', 'source_field': 'PID.18'},
             ]
         index = 2
         exp_res = expected_result[0]

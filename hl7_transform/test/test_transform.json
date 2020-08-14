@@ -8,5 +8,20 @@
   {"target_field": "ORC.7.4", "operation": "set_value",                                                       "args":{"value": "4"}       },
   {"target_field": "ORC.7.5", "operation": "set_value",                                                       "args":{"value": "5"}       },
   {"target_field": "ORC.7.6", "operation": "set_value",                                                       "args":{"value": "6"}       },
-  {"target_field": "SCH.9",   "operation": "set_end_time",        "source_fields": ["SCH.11.4", "SCH.11.3"]                                }
+  {"target_field": "SCH.9",   "operation": "set_end_time",        "source_fields": ["SCH.11.4", "SCH.11.3"]                               },
+  {
+    "operation": "generate_numeric_id",
+    "target_field": "ZBE.1.1"
+  },
+  {
+    "operation": "set_value",
+    "target_field": "ZBE.1.2",
+    "args": {
+      "value": "MOVEMENT"
+    }
+  },
+  {
+    "operation": "generate_current_datetime",
+    "target_field": "ZBE.2"
+  }
 ]
