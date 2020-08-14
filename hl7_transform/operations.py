@@ -36,7 +36,6 @@ class HL7Operation:
             - generate_numeric_id:          :class:`GenerateNumericID`,
             - generate_current_datetime:    :class:`GenerateCurrentDatetime`,
             - set_end_time:                 :class:`SetEndTime`,
-            - delete_segment:               :class:`DeleteSegment`
 
         """
         operations = {
@@ -48,7 +47,7 @@ class HL7Operation:
             'generate_numeric_id':          GenerateNumericID,
             'generate_current_datetime':    GenerateCurrentDatetime,
             'set_end_time':                 SetEndTime,
-            'delete_segment':               DeleteSegment,
+            # 'delete_segment':               DeleteSegment,
             }
         try:
             return operations[name](*args)
@@ -242,20 +241,20 @@ class SetEndTime(HL7Operation):
         return end_time.strftime(dt_format)
 
 
-class DeleteSegment(HL7Operation):
-    """Deletes a segment given.
-
-    The following operation will remvoe an PID segment from an HL7 message::
-
-    [
-        {
-            "target_field": "PID",
-            "operation": "delete_segment"
-        }
-    ]
-    """
-    def __init__(self, source_fields, args):
-        pass
-
-    def execute(self, message):
-        return None
+# class DeleteSegment(HL7Operation):
+#     """Deletes a segment given.
+#
+#     The following operation will remvoe an PID segment from an HL7 message::
+#
+#     [
+#         {
+#             "target_field": "PID",
+#             "operation": "delete_segment"
+#         }
+#     ]
+#     """
+#     def __init__(self, source_fields, args):
+#         pass
+#
+#     def execute(self, message):
+#         return None
