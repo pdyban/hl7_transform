@@ -35,18 +35,20 @@ class HL7Operation:
             - generate_alphanumeric_id:     :class:`GenerateAplhanumericID`,
             - generate_numeric_id:          :class:`GenerateNumericID`,
             - generate_current_datetime:    :class:`GenerateCurrentDatetime`,
-            - set_end_time:                 :class:`SetEndTime`
+            - set_end_time:                 :class:`SetEndTime`,
+            - delete_segment:               :class:`DeleteSegment`
 
         """
         operations = {
-            'copy_value':                   CopyValueOperation,
-            'add_values':                   AddValuesOperation,
-            'set_value':                    SetValueOperation,
-            'concatenate_values':           ConcatenateOperation,
+            'copy_value':                   CopyValue,
+            'add_values':                   AddValues,
+            'set_value':                    SetValue,
+            'concatenate_values':           Concatenate,
             'generate_alphanumeric_id':     GenerateAplhanumericID,
             'generate_numeric_id':          GenerateNumericID,
             'generate_current_datetime':    GenerateCurrentDatetime,
             'set_end_time':                 SetEndTime,
+            'delete_segment':               DeleteSegment,
             }
         try:
             return operations[name](*args)
@@ -54,7 +56,7 @@ class HL7Operation:
             raise KeyError("{} is not a valid operation name. Available operations are: {}".format(name, ', '.join(operations.keys())))
 
 
-class AddValuesOperation(HL7Operation):
+class AddValues(HL7Operation):
     """
     Sums up a list of field values to one value
     using type conversion as given by `args.type`.
@@ -88,7 +90,7 @@ class AddValuesOperation(HL7Operation):
         return str(sum(self.convert_to_type(message[field]) for field in self.source_fields))
 
 
-class CopyValueOperation(HL7Operation):
+class CopyValue(HL7Operation):
     """
     Copies a value from one field to the other.
 
@@ -111,7 +113,7 @@ class CopyValueOperation(HL7Operation):
         return message[self.field]
 
 
-class SetValueOperation(HL7Operation):
+class SetValue(HL7Operation):
     """
     Sets a field to a given value.
 
@@ -132,7 +134,7 @@ class SetValueOperation(HL7Operation):
         return self.value
 
 
-class GenerateAplhanumericID(SetValueOperation):
+class GenerateAplhanumericID(SetValue):
     """
     Generates an alphanumeric ID, producing a random string encoded in the
     hexadecimal system of length 32 bytes.
@@ -149,10 +151,10 @@ class GenerateAplhanumericID(SetValueOperation):
     """
     def __init__(self, source_fields, args):
         args['value'] = hashlib.md5(str(random.random()).encode()).hexdigest()
-        SetValueOperation.__init__(self, source_fields, args)
+        SetValue.__init__(self, source_fields, args)
 
 
-class GenerateNumericID(SetValueOperation):
+class GenerateNumericID(SetValue):
     """
     Generates an numeric ID, producing a random string encoded with digits
     in decimal system of length 9 digits.
@@ -169,10 +171,10 @@ class GenerateNumericID(SetValueOperation):
     """
     def __init__(self, source_fields, args):
         args['value'] = '{:09}'.format(random.randint(0,1e9))
-        SetValueOperation.__init__(self, source_fields, args)
+        SetValue.__init__(self, source_fields, args)
 
 
-class GenerateCurrentDatetime(SetValueOperation):
+class GenerateCurrentDatetime(SetValue):
     """
     Generates current datetime as a string in HL7 format.
     This is useful for creating event timestamps.
@@ -188,10 +190,10 @@ class GenerateCurrentDatetime(SetValueOperation):
     """
     def __init__(self, source_fields, args):
         args['value'] = datetime.now().strftime('%Y%m%d%H%M%S')
-        SetValueOperation.__init__(self, source_fields, args)
+        SetValue.__init__(self, source_fields, args)
 
 
-class ConcatenateOperation(HL7Operation):
+class Concatenate(HL7Operation):
     """
     Concatenates two field values as strings placing a separator in between.
 
@@ -238,3 +240,22 @@ class SetEndTime(HL7Operation):
         duration = timedelta(minutes=int(message[self.duration]))
         end_time = dt + duration
         return end_time.strftime(dt_format)
+
+
+class DeleteSegment(HL7Operation):
+    """Deletes a segment given.
+
+    The following operation will remvoe an PID segment from an HL7 message::
+
+    [
+        {
+            "target_field": "PID",
+            "operation": "delete_segment"
+        }
+    ]
+    """
+    def __init__(self, source_fields, args):
+        pass
+
+    def execute(self, message):
+        return None
