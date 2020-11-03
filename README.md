@@ -51,7 +51,7 @@ from hl7_transform.message import HL7Message
 mapping = HL7Mapping.from_json('test_transform.json')
 message = HL7Message.from_file('test_msg.hl7')
 transform = HL7Transform(mapping)
-transformed_message = transform.execute(message)
+transformed_message = transform(message)
 ```
 
 For example code, see inside [test](hl7_transform/test) module, in particular [test_transform.py](hl7_transform/test/test_transform.py).
