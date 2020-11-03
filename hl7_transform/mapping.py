@@ -72,7 +72,7 @@ class HL7Mapping(list):
         js = json.loads(s, object_hook=my_hook)
         return HL7Mapping(js)
 
-    def __repr__(self):
+    def __str__(self):
         ret = []
         for mapping in self:
             for target_field, operation in mapping.items():

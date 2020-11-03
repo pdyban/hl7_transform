@@ -6,9 +6,10 @@ from hl7_transform.field import HL7Field
 import hashlib
 import random
 from datetime import datetime, timedelta
+from abc import ABC, abstractmethod
 
 
-class HL7Operation:
+class HL7Operation(ABC):
     """
     An Operation interface, all operations must derive from this class.
     """
@@ -16,10 +17,16 @@ class HL7Operation:
         raise NotImplementedError()
 
     def execute(self, message):
+        from warnings import warn
+        warn("This function is deprecated. Use __call__ instead.")
+        return self(message)
+
+    @abstractmethod
+    def __call__(self, message):
         raise NotImplementedError()
 
-    def __repr__(self):
-        return self.__class__.__name__
+    def __str__(self):
+        return '<{}>'.format(self.__class__.__name__)
 
     @staticmethod
     def from_name(name, *args):
@@ -85,7 +92,7 @@ class AddValues(HL7Operation):
         else:
             self.convert_to_type = str
 
-    def execute(self, message):
+    def __call__(self, message):
         return str(sum(self.convert_to_type(message[field]) for field in self.source_fields))
 
 
@@ -108,7 +115,7 @@ class CopyValue(HL7Operation):
             raise RuntimeError("CopyValueOperation can only copy one field value.")
         self.field = HL7Field(source_fields[0])
 
-    def execute(self, message):
+    def __call__(self, message):
         return message[self.field]
 
 
@@ -129,7 +136,7 @@ class SetValue(HL7Operation):
     def __init__(self, source_fields, args):
         self.value = args['value']
 
-    def execute(self, message):
+    def __call__(self, message):
         return self.value
 
 
@@ -149,7 +156,7 @@ class GenerateAplhanumericID(SetValue):
         ]
     """
     def __init__(self, source_fields, args):
-        args['value'] = hashlib.md5(str(random.random()).encode()).hexdigest()
+        args['value'] = hashlib.md5(str(random.Random()).encode()).hexdigest()
         SetValue.__init__(self, source_fields, args)
 
 
@@ -211,7 +218,7 @@ class Concatenate(HL7Operation):
         self.fields = [HL7Field(field) for field in source_fields]
         self.separator = args['separator']
 
-    def execute(self, message):
+    def __call__(self, message):
         return self.separator.join(message[field] for field in self.fields)
 
 
@@ -232,29 +239,10 @@ class SetEndTime(HL7Operation):
         self.dt = HL7Field(source_fields[0])
         self.duration = HL7Field(source_fields[1])
 
-    def execute(self, message):
+    def __call__(self, message):
         dt_str = message[self.dt]
         dt_format = ('%Y%m%d%H%M', '%Y%m%d%H%M%S')[len(dt_str) > 12]
         dt = datetime.strptime(dt_str, dt_format)
         duration = timedelta(minutes=int(message[self.duration]))
         end_time = dt + duration
         return end_time.strftime(dt_format)
-
-
-# class DeleteSegment(HL7Operation):
-#     """Deletes a segment given.
-#
-#     The following operation will remvoe an PID segment from an HL7 message::
-#
-#     [
-#         {
-#             "target_field": "PID",
-#             "operation": "delete_segment"
-#         }
-#     ]
-#     """
-#     def __init__(self, source_fields, args):
-#         pass
-#
-#     def execute(self, message):
-#         return None

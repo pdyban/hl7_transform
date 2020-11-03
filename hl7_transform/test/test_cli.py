@@ -1,12 +1,8 @@
-from hl7_transform.cli import main_cli
+from hl7_transform.__main__ import main_cli
 import unittest
 import os
 from contextlib import redirect_stdout
 import io
-# from hl7_transform.mapping import HL7Mapping
-# from hl7_transform.transform import HL7Transform
-# from hl7_transform.message import HL7Message
-# import subprocess
 
 
 class TestCLI(unittest.TestCase):
@@ -28,23 +24,6 @@ class TestCLI(unittest.TestCase):
     def tearDown(self):
         if self.args.out is not None and os.path.exists(self.args.out):
             os.remove(self.args.out)
-
-    # TODO: fix this test case. It fails with error "/usr/bin/python: Import by filename is not supported"
-    # def test_cli(self):
-    #     cli = ["python", "-m hl7_transform {} {} {}".format(self.args.message, self.args.mappingfile, self.args.outfile)]
-    #     res = subprocess.run(cli)
-    #     print(res.returncode)
-    #     self.assertEqual(0, res.returncode)
-    #
-    #     # verify result file
-    #     mapping = HL7Mapping.from_json(self.args.mappingfile)
-    #     message = HL7Message.from_file(self.args.message)
-    #     transform = HL7Transform(mapping)
-    #     expected_result_message = transform.execute(message)
-    #     self.assertTrue(os.path.exists(self.args.outfile), msg='CLI call to library failed, the test message could not be transformed.')
-    #     with open(self.args.outfile) as f:
-    #         result_file = f.read()
-    #         self.assertEqual(result_file, expected_result_message.to_string())
 
     def test_main_cli(self):
         res = main_cli(self.args)

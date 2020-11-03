@@ -1,6 +1,6 @@
 from hl7_transform.message import HL7Message
 from hl7_transform.field import HL7Field
-from hl7_transform.core import APIError
+from hl7_transform import APIError
 import unittest
 
 

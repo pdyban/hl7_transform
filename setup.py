@@ -6,14 +6,14 @@ this_directory = path.abspath(path.dirname(__file__))
 with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
-version = '0.1.5'
+version = '0.1.6'
 account_name = 'pdyban'
 setup(
   name = 'hl7_transform',
   packages = find_packages(),
   version = version,
   license='MIT',
-  description = 'Tool to transform HL7 messages using mapping schemes',
+  description = 'Library that transforms HL7 messages using mapping schemes',
   long_description=long_description,
   long_description_content_type='text/markdown',
   author = 'Pavlo Dyban (Doctolib GmbH)',
@@ -37,6 +37,7 @@ setup(
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
     'Topic :: Communications',
     'Topic :: Software Development :: Libraries',
   ],

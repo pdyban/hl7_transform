@@ -14,9 +14,6 @@ class HL7Field:
         self.component = int(self.component)
         self.sub_component = 1  # currently fixed
 
-    def __repr__(self):
-        return '({})'.format(self.name)
-
     def __str__(self):
         return '({})'.format(self.name)
 
