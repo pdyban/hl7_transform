@@ -22,7 +22,7 @@ class TestHL7Transform(unittest.TestCase):
         self.assertEqual(len(self.transform.mapping), 13)
 
     def test_execution(self):
-        message_transformed = self.transform.execute(self.message)
+        message_transformed = self.transform(self.message)
         self.assertEqual(len(message_transformed.hl7_message.children), 9)
         self.assertTrue('TQ1' in [segment.name for segment in message_transformed.hl7_message.children])
         self.assertEqual(message_transformed[HL7Field('MSH.9')], 'SIU^S12^SIU_S12')

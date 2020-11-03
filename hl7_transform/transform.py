@@ -1,7 +1,6 @@
 """
 This file contains the transformation class.
 """
-# from copy import deepcopy
 
 
 class HL7Transform:
@@ -16,6 +15,11 @@ class HL7Transform:
         self.mapping = mapping
 
     def execute(self, message):
+        from warnings import warn
+        warn("This function is deprecated. Use __call__ instead.")
+        return self(message)
+
+    def __call__(self, message):
         """
         Applies the transformation to an HL7 message and outputs the
         transformed message both as the return value and
@@ -24,11 +28,10 @@ class HL7Transform:
         :param message: Applies the transformation to this message.
         :return: The transformed copy of the input message.
         """
-        # message_transformed = deepcopy(message)
         for mapping in self.mapping:
             for target_field, operation in mapping.items():
                 try:
-                    message[target_field] = operation.execute(message)
+                    message[target_field] = operation(message)
                 except (IndexError, KeyError) as e:
                     print(message.to_string())
                     raise RuntimeError("Error occurred during processing of {}. Reason: {}".format(target_field, str(e)))

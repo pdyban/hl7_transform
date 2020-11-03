@@ -24,7 +24,7 @@ by importing the library in your Python code::
     mapping = HL7Mapping.from_json('hl7_transform/test/test_transform.json')
     message = HL7Message.from_file('hl7_transform/test/test_msg.hl7')
     transform = HL7Transform(mapping)
-    transformed_message = transform.execute(message)
+    transformed_message = transform(message)
 
 Features
 --------

@@ -2,6 +2,7 @@
 Encapsulates the functionality of an HL7 field.
 """
 
+
 class HL7Field:
     def __init__(self, name):
         self.name = name
@@ -13,9 +14,6 @@ class HL7Field:
         self.repetition = 1  # currently fixed
         self.component = int(self.component)
         self.sub_component = 1  # currently fixed
-
-    def __repr__(self):
-        return '({})'.format(self.name)
 
     def __str__(self):
         return '({})'.format(self.name)
