@@ -20,7 +20,7 @@ class HL7Message:
         """
         Initialize a message from string.
         """
-        txt = txt.replace('\n','\r')
+        txt = txt.replace('\n', '\r')
         return HL7Message(parse_message(txt, find_groups=False))
 
     @staticmethod
@@ -91,9 +91,9 @@ class HL7Message:
                     component_dict[component_index] = component.value
                 component_dict[index.component] = value
 
-                comp_value_list = ['']*max(len(component_dict), index.component)
+                comp_value_list = [''] * max(len(component_dict), index.component)
                 for comp_index, comp_value in component_dict.items():
-                    comp_value_list.insert(comp_index-1, comp_value)
+                    comp_value_list.insert(comp_index - 1, comp_value)
                 str_value = component_separator.join(comp_value_list)
             field.value = str_value
             return True

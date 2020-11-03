@@ -55,10 +55,10 @@ class HL7Operation(ABC):
             'generate_current_datetime':    GenerateCurrentDatetime,
             'set_end_time':                 SetEndTime,
             # 'delete_segment':               DeleteSegment,
-            }
+        }
         try:
             return operations[name](*args)
-        except KeyError as e:
+        except KeyError:
             raise KeyError("{} is not a valid operation name. Available operations are: {}".format(name, ', '.join(operations.keys())))
 
 
@@ -156,7 +156,7 @@ class GenerateAplhanumericID(SetValue):
         ]
     """
     def __init__(self, source_fields, args):
-        args['value'] = hashlib.md5(str(random.Random()).encode()).hexdigest()
+        args['value'] = hashlib.md5(str(random.Random().random()).encode()).hexdigest()
         SetValue.__init__(self, source_fields, args)
 
 
@@ -176,7 +176,7 @@ class GenerateNumericID(SetValue):
         ]
     """
     def __init__(self, source_fields, args):
-        args['value'] = '{:09}'.format(random.randint(0,1e9))
+        args['value'] = '{:09}'.format(random.Random().randint(0, 1e9))
         SetValue.__init__(self, source_fields, args)
 
 

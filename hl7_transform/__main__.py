@@ -1,10 +1,9 @@
 """
 This package allows transformation of HL7 messages using field mapping.
 
-\author Pavlo Dyban (Doctolib GmbH)
-\date   26-May-2020
+:author Pavlo Dyban (Doctolib GmbH)
+:date   26-May-2020
 """
-
 import argparse
 from hl7_transform.mapping import HL7Mapping
 from hl7_transform.transform import HL7Transform
@@ -17,7 +16,7 @@ def main_cli(args):
     elif args.type == 'csv':
         mapping = HL7Mapping.from_csv(args.mappingfile)
     else:
-        raise ArgumentError('Unsupported mapping file type. Currently supported are: json, csv.')
+        raise TypeError('Unsupported mapping file type. Currently supported are: json, csv.')
     transform = HL7Transform(mapping)
     if args.message:
         message = HL7Message.from_file(args.message)
@@ -29,6 +28,7 @@ def main_cli(args):
             f_out.write(message_transformed.to_string())
     else:
         print(message_transformed.to_string())
+
 
 def main():
     parser = argparse.ArgumentParser(

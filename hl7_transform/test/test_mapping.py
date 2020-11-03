@@ -3,7 +3,7 @@ Tests for hl7_transform.mapping module.
 """
 import unittest
 from hl7_transform.mapping import HL7Mapping
-import json
+
 
 class TestHL7Mapping(unittest.TestCase):
     def setUp(self):
@@ -28,17 +28,16 @@ class TestHL7Mapping(unittest.TestCase):
         expected_result = [
             {'target_field_name': 'PID.3', 'operation_name': 'SetValue'},
             {'target_field_name': 'PID.18', 'operation_name': 'SetValue'},
-            ]
+        ]
         for index, exp_res in enumerate(expected_result):
             target_field = list(mapping[index].keys())[0]
             operation = mapping[index][target_field]
             self.assertEqual(target_field.name, exp_res['target_field_name'])
             self.assertEqual(operation.__class__.__name__, exp_res['operation_name'])
-
-
-        expected_result = [
-            {'target_field_name': 'PV1.2', 'operation_name': 'CopyValue', 'source_field': 'PID.18'},
-            ]
+        expected_result = [{
+            'target_field_name': 'PV1.2',
+            'operation_name': 'CopyValue',
+            'source_field': 'PID.18'}]
         index = 2
         exp_res = expected_result[0]
         target_field = list(mapping[index].keys())[0]
@@ -46,6 +45,7 @@ class TestHL7Mapping(unittest.TestCase):
         self.assertEqual(target_field.name, exp_res['target_field_name'])
         self.assertEqual(operation.__class__.__name__, exp_res['operation_name'])
         self.assertEqual(operation.field.name, exp_res['source_field'])
+
 
 if __name__ == '__main__':
     unittest.main()

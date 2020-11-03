@@ -2,6 +2,7 @@
 Encapsulates the functionality of an HL7 field.
 """
 
+
 class HL7Field:
     def __init__(self, name):
         self.name = name
